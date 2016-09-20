@@ -13,6 +13,8 @@ request_result = requests.get(url_to_check)
 # read cache control and etag header
 if 'cache-control' in request_result.headers:
     cache_control = request_result.headers['cache-control']
+else:
+    cache_control = "not available"
 if 'etag' in request_result.headers:
     etag = request_result.headers['etag']
 else:
