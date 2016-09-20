@@ -1,6 +1,9 @@
 import sys
 import requests
 
+# constants
+NOT_AVAILABLE = "not available"
+
 # check arguments
 if len(sys.argv) < 2:
     print("Please provide the url of a webresource, e.g. http://www.github.com")
@@ -14,11 +17,11 @@ request_result = requests.get(url_to_check)
 if 'cache-control' in request_result.headers:
     cache_control = request_result.headers['cache-control']
 else:
-    cache_control = "not available"
+    cache_control = NOT_AVAILABLE
 if 'etag' in request_result.headers:
     etag = request_result.headers['etag']
 else:
-    etag = "not available"
+    etag = NOT_AVAILABLE
 
 print("Cache statistics for resource " + url_to_check)
 print("Cache control: " + cache_control)
