@@ -1,5 +1,6 @@
 import sys
 import requests
+from bs4 import BeautifulSoup
 
 # constants
 NOT_AVAILABLE = "not available"
@@ -12,6 +13,15 @@ if len(sys.argv) < 2:
 # fetch url
 url_to_check = sys.argv[1]
 request_result = requests.get(url_to_check)
+
+# get all included resources
+html = request_result.text
+soup = BeautifulSoup(html, 'html.parser')
+# css files
+links = soup.find_all('link')
+for link in links:
+    # TODO load everything with preload or stylesheet rel
+    print('it is a link : ' + str(link.get('href')) + ' rel: ' +  str(link.get('rel')))
 
 # read cache control and etag header
 if 'cache-control' in request_result.headers:
@@ -26,4 +36,3 @@ else:
 print("Cache statistics for resource " + url_to_check)
 print("Cache control: " + cache_control)
 print("Etag: " + etag)
-
