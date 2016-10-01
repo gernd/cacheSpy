@@ -1,4 +1,5 @@
 # Web Cache Spy
+![Travis Build Status](https://travis-ci.org/gernd/pyWebCacheSpy.svg?branch=master "Travis Build Status")
 A command line tool that lets you retrieve caching information about web resources
 
 ## Prerequisites
