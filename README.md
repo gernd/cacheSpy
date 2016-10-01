@@ -9,7 +9,7 @@ A command line tool that lets you retrieve caching information about web resourc
 pip install requests beautifulsoup4
 
 ## Usage
-python cache_spy.py <url>
+python cache_spy.py \<url\>
 
 e.g. python cache_spy.py http://www.google.de
 
