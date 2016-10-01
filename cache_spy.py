@@ -43,15 +43,17 @@ if len(sys.argv) < 2:
     print("Please provide the url of a webresource, e.g. http://www.github.com")
     sys.exit(1)
 
-# fetch url of root webresource
+# aggregated cache information 
+cache_information_items = []
+
+# fetch root webresource
 url_to_check = sys.argv[1]
 request_result = requests.get(url_to_check)
 
 # print cache properties of "main" url
 cache_props = extract_cache_properties(request_result)
-print("Cache statistics for resource " + url_to_check)
-print("Cache control: " + cache_props[0])
-print("Etag: " + cache_props[1])
+cache_information = (url_to_check,) + cache_props 
+cache_information_items.append(cache_information)
 
 # get all included resources
 html = request_result.text
@@ -70,7 +72,9 @@ for link in links:
     # get cache properties for resource
     url = link.get('href')
     cache_props = get_cache_properties(url)
+    cache_information = (url,) + cache_props 
+    cache_information_items.append(cache_information)
 
-    print("Cache statistics for resource " + url)
-    print("Cache control: " + cache_props[0])
-    print("Etag: " + cache_props[1])
+# print all cache properties
+for cache_information in cache_information_items:
+    print('URL:{:s}\nCache-Control:{:s}\nEtag:{:s}\n'.format(cache_information[0],cache_information[1],cache_information[2]))
