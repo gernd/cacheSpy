@@ -5,8 +5,8 @@
 A command line tool that lets you retrieve caching information about web resources
 
 ## Prerequisites
-* [The Python Requests Library](https://requests.readthedocs.io/en/master/)
-* [Beatiful Soup](https://www.crummy.com/software/BeautifulSoup/)
+* Python 3
+* libraries in requirements.txt
 
 ### Installing
 pip install -r requirements.txt
