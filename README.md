@@ -9,7 +9,7 @@ A command line tool that lets you retrieve caching information about web resourc
 * [Beatiful Soup](https://www.crummy.com/software/BeautifulSoup/)
 
 ### Installing
-pip install requests beautifulsoup4
+pip install -r requirements.txt
 
 ## Usage
 python cache_spy.py \<url\>
