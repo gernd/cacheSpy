@@ -7,18 +7,12 @@ NOT_AVAILABLE = "not available"
 
 # methods
 
-def get_cache_properties(web_resource_url):
-    """Gets the cache properties of the given URL
+def extract_cache_properties(request_result):
+    """Extracts cache properties from a request result
 
-    web_resource_url: The URL from which the resource should be fetched
+    request_result: Result of the request for extracting the cache properties
     Returns: a tuple consisting holding the cache-control header and the etag
     """
-    print('Fetching cache props for: ' + str(web_resource_url))
-
-    # perform actual request
-    request_result = requests.get(web_resource_url)
-
-    # read cache control and etag header from response
     if 'cache-control' in request_result.headers:
         cache_control = request_result.headers['cache-control']
     else:
@@ -30,6 +24,19 @@ def get_cache_properties(web_resource_url):
 
     return (cache_control, etag)
 
+def get_cache_properties(web_resource_url):
+    """Gets the cache properties of the given URL
+
+    web_resource_url: The URL from which the resource should be fetched
+    Returns: a tuple consisting holding the cache-control header and the etag
+    """
+    print('Fetching cache props for: ' + str(web_resource_url))
+
+    # perform actual request
+    request_result = requests.get(web_resource_url)
+
+    cache_properties = extract_cache_properties(request_result)
+    return cache_properties
 
 # check arguments
 if len(sys.argv) < 2:
@@ -39,6 +46,12 @@ if len(sys.argv) < 2:
 # fetch url of root webresource
 url_to_check = sys.argv[1]
 request_result = requests.get(url_to_check)
+
+# print cache properties of "main" url
+cache_props = extract_cache_properties(request_result)
+print("Cache statistics for resource " + url_to_check)
+print("Cache control: " + cache_props[0])
+print("Etag: " + cache_props[1])
 
 # get all included resources
 html = request_result.text
