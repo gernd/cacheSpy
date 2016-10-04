@@ -1,6 +1,7 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
+from prettytable import PrettyTable
 
 # constants
 NOT_AVAILABLE = "not available"
@@ -75,5 +76,10 @@ for link in links:
     cache_information_items.append(cache_information)
 
 # print all cache properties
+t = PrettyTable(['Summary'])
+print(t)
+t = PrettyTable(['URL', 'Cache-Control', 'Etag'])
 for cache_information in cache_information_items:
-    print('URL:{:s}\nCache-Control:{:s}\nEtag:{:s}\n'.format(cache_information[0],cache_information[1],cache_information[2]))
+    t.add_row([cache_information[0],cache_information[1],cache_information[2]])
+
+print(t)
