@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 NOT_AVAILABLE = "not available"
 
 # methods
-
 def extract_cache_properties(request_result):
     """Extracts cache properties from a request result
 
