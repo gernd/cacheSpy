@@ -58,6 +58,7 @@ cache_information_items.append(cache_information)
 # get all included resources
 html = request_result.text
 soup = BeautifulSoup(html, 'html.parser')
+# fetch all resources adressed via link
 links = soup.find_all('link')
 for link in links:
     # we need the rel attribute for checking the resource
@@ -71,6 +72,19 @@ for link in links:
 
     # get cache properties for resource
     url = link.get('href')
+    cache_props = get_cache_properties(url)
+    cache_information = (url,) + cache_props 
+    cache_information_items.append(cache_information)
+
+# fetch all resources adressed via script (but of course not inline scripts)
+scripts = soup.find_all('script')
+for script in scripts:
+    # we don't need to fetch inline scripts
+    if not script.get('src'):
+        continue
+
+    # get cache properties for resource
+    url = script.get('src')
     cache_props = get_cache_properties(url)
     cache_information = (url,) + cache_props 
     cache_information_items.append(cache_information)
