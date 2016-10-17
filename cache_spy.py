@@ -89,6 +89,19 @@ for script in scripts:
     cache_information = (url,) + cache_props 
     cache_information_items.append(cache_information)
 
+# fetch all images resource information
+images = soup.find_all('img')
+for image in images:
+    # src attribute is needed for fetching the image
+    if not image.get('src'):
+        continue
+
+    # get cache properties for resource
+    url = image.get('src')
+    cache_props = get_cache_properties(url)
+    cache_information = (url,) + cache_props 
+    cache_information_items.append(cache_information)
+
 # print all cache properties
 t = PrettyTable(['URL', 'Cache-Control', 'Etag'])
 for cache_information in cache_information_items:
